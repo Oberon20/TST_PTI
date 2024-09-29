@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOAP Calculator</title>
-
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -38,27 +36,26 @@
             </div>
         </div>
 
-        <!-- PHP Block -->
         <div class="row justify-content-center mt-4">
             <div class="col-md-6">
                 <?php
                 // Include file AbstractPort.php
                 require_once 'AbstractPort.php';
 
-                // Check if form is submitted
+                // Mengecek apakah form sudah di submit
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Get the input values from the form
                     $num1 = $_POST['num1'];
                     $operator = $_POST['operator'];
                     $num2 = $_POST['num2'];
 
-                    // Create an instance of AbstractPort
+                    // Membuat instance AbstractPort
                     $calculator = new \Cowglow\SoapCalculator\Infrastructure\AbstractPort('http://www.dneonline.com/calculator.asmx?WSDL');
 
-                    // Prepare the inputs for SOAP request
+                    // Bilangan tipe data numerik untuk melakukan SOAP request
                     $inputs = [$num1, $num2];
 
-                    // Call the SoapRequest method and get the result
+                    // Memanggil method SoapRequest untuk mendapatkan hasil
                     try {
                         $result = $calculator->SoapRequest($inputs, $operator);
 
@@ -73,7 +70,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
