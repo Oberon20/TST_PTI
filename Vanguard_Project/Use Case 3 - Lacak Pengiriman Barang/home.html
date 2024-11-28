@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order</title>
+    <script>
+        async function trackOrder() {
+            const orderId = document.getElementById("orderId").value;
+            if (!orderId) {
+                alert("Please enter a valid Order ID.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/server.php/tracking/${orderId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) throw new Error("Failed to fetch tracking information");
+
+                const data = await response.json();
+
+                // Display tracking information
+                document.getElementById("trackingResult").innerHTML = `
+                    <p><strong>Status:</strong> ${data.status}</p>
+                    <p><strong>Location:</strong> ${data.location}</p>
+                    <p><strong>Estimated Delivery:</strong> ${data.estimated_delivery}</p>
+                `;
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("trackingResult").textContent = "Error retrieving tracking information.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Track Your Order</h1>
+    <div>
+        <label for="orderId">Order ID:</label>
+        <input type="text" id="orderId" name="orderId">
+        <button onclick="trackOrder()">Track</button>
+    </div>
+    <div id="trackingResult" style="margin-top:20px;">
+    </div>
+</body>
+</html>
